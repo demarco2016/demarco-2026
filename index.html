@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEMARCO Â· Portfolio 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0b0e;
+            color: #f0f0f5;
+            min-height: 100vh;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(37,99,235,0.12) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 80%, rgba(6,182,212,0.06) 0%, transparent 50%);
+            z-index: -1;
+        }
+        .glass {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10,11,14,0.8);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+            padding: 0 24px;
+        }
+        .nav-brand { font-weight: 900; font-size: 20px; letter-spacing: -0.5px; background: linear-gradient(135deg, #f0f0f5, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-tag { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 500; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 32px 24px; }
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .hero h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; color: #f0f0f5; }
+        .hero p { font-size: 14px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+        .stats { display: flex; gap: 12px; flex-wrap: wrap; }
+        .stat {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 14px 24px;
+            text-align: center;
+            min-width: 110px;
+        }
+        .stat .num { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #818cf8, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat .label { font-size: 11px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; font-weight: 600; }
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .filters input {
+            flex: 1;
+            min-width: 220px;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-size: 14px;
+            outline: none;
+            color: #f0f0f5;
+            transition: all .2s;
+        }
+        .filters input::placeholder { color: rgba(255,255,255,0.25); }
+        .filters input:focus { border-color: rgba(129,140,248,0.4); box-shadow: 0 0 0 3px rgba(129,140,248,0.1); }
+        .filters select {
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-size: 14px;
+            outline: none;
+            color: #f0f0f5;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .filters select option { background: #1a1b23; color: #f0f0f5; }
+        .filters select:focus { border-color: rgba(129,140,248,0.4); }
+        .table-wrap {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 700px; }
+        thead { background: rgba(255,255,255,0.03); }
+        thead th { padding: 14px 18px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.3); border-bottom: 1px solid rgba(255,255,255,0.06); }
+        tbody tr { border-bottom: 1px solid rgba(255,255,255,0.03); transition: all .15s; }
+        tbody tr:hover { background: rgba(255,255,255,0.05); }
+        tbody td { padding: 16px 18px; vertical-align: middle; }
+        .num-col { color: rgba(255,255,255,0.2); font-weight: 500; width: 32px; font-size: 13px; }
+        .proj-name { font-weight: 600; color: #f0f0f5; }
+        .badge { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 8px; color: #f0f0f5; }
+        .badge-defi { background: rgba(5,150,105,0.25); }
+        .badge-l1 { background: rgba(37,99,235,0.25); }
+        .badge-ai { background: rgba(124,58,237,0.25); }
+        .badge-gaming { background: rgba(234,88,12,0.25); }
+        .badge-dex { background: rgba(8,145,178,0.25); }
+        .badge-bridge { background: rgba(220,38,38,0.25); }
+        .badge-other { background: rgba(255,255,255,0.1); }
+        .task-tag { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 500; }
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all .2s;
+            background: rgba(255,255,255,0.03);
+        }
+        .link-btn:hover { background: rgba(129,140,248,0.15); border-color: rgba(129,140,248,0.3); color: #a5b4fc; }
+        .footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: rgba(255,255,255,0.2);
+            font-size: 13px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            margin-top: 40px;
+        }
+        .footer strong { color: rgba(255,255,255,0.5); }
+        .footer a { color: rgba(129,140,248,0.6); text-decoration: none; transition: color .2s; }
+        .footer a:hover { color: #a5b4fc; }
+        @media (max-width: 640px) {
+            .hero { flex-direction: column; align-items: flex-start; }
+            .container { padding: 20px 16px; }
+            thead th, tbody td { padding: 12px 14px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+    <div class="nav-inner">
+        <div class="nav-brand">â—† DEMARCO 2026</div>
+        <div class="nav-tag">Ã©diteur: demarco2016 Â· ADMIN: Kiravixx</div>
+    </div>
+</div>
+<div class="container">
+    <div class="hero">
+        <div>
+            <h1>Project Big Potential in 2026</h1>
+            <p>Daily tracker Â· Deep work for 6 hours every day</p>
+        </div>
+        <div class="stats">
+            <div class="stat"><div class="num" id="totalProjects">0</div><div class="label">Projects</div></div>
+
+        </div>
+    </div>
+    <div class="filters">
+        <input type="text" id="searchInput" placeholder="Search project or task..." oninput="filterTable()">
+        <select id="categoryFilter" onchange="filterTable()">
+            <option value="">All Categories</option>
+            <option value="DeFi / Swap">DeFi / Swap</option>
+            <option value="L1 / L2 / Testnet">L1 / L2 / Testnet</option>
+            <option value="AI / Testnet">AI / Testnet</option>
+            <option value="AI / App">AI / App</option>
+            <option value="Gaming / App">Gaming / App</option>
+            <option value="DeFi / Bridge">DeFi / Bridge</option>
+            <option value="DeFi / Community">DeFi / Community</option>
+            <option value="DeFi / Rewards">DeFi / Rewards</option>
+            <option value="DeFi / Points">DeFi / Points</option>
+            <option value="DeFi / App">DeFi / App</option>
+        </select>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>#</th><th>Project</th><th>Category</th><th>Task</th><th>Link</th></tr></thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+    <div class="footer">
+        âœ¦ <strong>DEMARCO2016</strong> â€” Ã‰diteur Â· <strong>Kiravixx</strong> â€” ADMIN âœ¦<br><a href="https://t.me/Kiravixx" target="_blank">Join on Telegram â†’</a>
+    </div>
+</div>
+<script>
+const DATA = [
+    {proj:"Canopy Network",cat:"L1 / L2 / Testnet",task:"Rewards",link:"https://canopy.network"},
+    {proj:"Canopy Network",cat:"L1 / L2 / Testnet",task:"Staking",link:"https://canopy.network"},
+    {proj:"GenLayer",cat:"AI / Testnet",task:"Portal",link:"https://genlayer.com"},
+    {proj:"GenLayer",cat:"AI / Testnet",task:"Studio",link:"https://studio.genlayer.com"},
+    {proj:"Miden",cat:"L1 / L2 / Testnet",task:"Playground",link:"https://miden.io"},
+    {proj:"dFusion AI",cat:"AI / Testnet",task:"Testnet",link:"https://dfusion.ai"},
+    {proj:"ARC Network",cat:"DeFi / Community",task:"Community",link:"https://arc.network"},
+    {proj:"Sumex",cat:"DeFi / Swap",task:"Dashboard",link:"https://sumex.xyz"},
+    {proj:"DAChain",cat:"L1 / L2 / Testnet",task:"Inception",link:"https://dachain.io"},
+    {proj:"X1 EcoChain",cat:"L1 / L2 / Testnet",task:"Testnet",link:"https://x1ecochain.com"},
+    {proj:"Inco",cat:"L1 / L2 / Testnet",task:"Experiences",link:"https://inco.network"},
+    {proj:"Linera",cat:"L1 / L2 / Testnet",task:"Market",link:"https://linera.io"},
+    {proj:"Linera",cat:"L1 / L2 / Testnet",task:"Portal",link:"https://linera.io"},
+    {proj:"Vara Network",cat:"DeFi / Bridge",task:"Bridge",link:"https://vara.network"},
+    {proj:"Vara Network",cat:"DeFi / Bridge",task:"DEX",link:"https://vara.network"},
+    {proj:"IOPN",cat:"DeFi / Swap",task:"Faucet",link:"https://iopn.finance"},
+    {proj:"IOPN",cat:"DeFi / Swap",task:"Swap",link:"https://iopn.finance"},
+    {proj:"Robinhood Chain",cat:"L1 / L2 / Testnet",task:"Faucet",link:"https://robinhoodchain.com"},
+    {proj:"Arbitrum",cat:"DeFi / Bridge",task:"Bridge",link:"https://arbitrum.io"},
+    {proj:"Arkada",cat:"Gaming / App",task:"App",link:"https://arkada.gg"},
+    {proj:"ADI Foundation",cat:"AI / Testnet",task:"Explorer",link:"https://adi.foundation"},
+    {proj:"ADI Foundation",cat:"AI / Testnet",task:"Faucet",link:"https://adi.foundation"},
+    {proj:"ADI Foundation",cat:"AI / Testnet",task:"Bridge",link:"https://adi.foundation"},
+    {proj:"Hashi / SUI",cat:"DeFi / Bridge",task:"DevNet",link:"https://hashi.io"},
+    {proj:"SUI",cat:"L1 / L2 / Testnet",task:"Faucet",link:"https://sui.io"},
+    {proj:"Prismax AI",cat:"AI / App",task:"Fleet",link:"https://prismax.ai"},
+    {proj:"Bulk Trade",cat:"DeFi / Swap",task:"Early Access",link:"https://bulktrade.io"},
+    {proj:"Into Space",cat:"Gaming / App",task:"Beta",link:"https://intospace.game"},
+    {proj:"MeyHub",cat:"DeFi / Rewards",task:"Bricks",link:"https://meyhub.com"},
+    {proj:"Concrete XYZ",cat:"DeFi / Points",task:"Points",link:"https://concrete.xyz"},
+    {proj:"LitVM",cat:"L1 / L2 / Testnet",task:"Testnet",link:"https://litvm.com"},
+    {proj:"SimpleChain",cat:"L1 / L2 / Testnet",task:"Task",link:"https://simplechain.io"},
+    {proj:"KiiChain",cat:"L1 / L2 / Testnet",task:"Testnet",link:"https://kiichain.io"},
+    {proj:"Nemesis Trade",cat:"DeFi / Swap",task:"Trade",link:"https://nemesistrade.io"},
+
+];
+function catBadge(cat) {
+    if (cat.includes("Swap")) return "badge-dex";
+    if (cat.includes("Bridge")) return "badge-bridge";
+    if (cat.includes("DeFi")) return "badge-defi";
+    if (cat.includes("AI")) return "badge-ai";
+    if (cat.includes("Gaming")) return "badge-gaming";
+    if (cat.includes("L1")) return "badge-l1";
+    return "badge-other";
+}
+function render(rows) {
+    const tbody = document.getElementById("tableBody");
+    tbody.innerHTML = rows.map((r,i)=>`
+        <tr>
+            <td class="num-col">${i+1}</td>
+            <td><div class="proj-name">${r.proj}</div></td>
+            <td><span class="badge ${catBadge(r.cat)}">${r.cat}</span></td>
+            <td><span class="task-tag">${r.task}</span></td>
+            <td><a href="${r.link}" target="_blank" class="link-btn">Open â†’</a></td>
+
+        </tr>
+    `).join("");
+    document.getElementById("totalProjects").textContent = rows.length;
+}
+function filterTable() {
+    const q = document.getElementById("searchInput").value.toLowerCase();
+    const cat = document.getElementById("categoryFilter").value;
+    let filtered = DATA.filter(r => (r.proj.toLowerCase().includes(q)||r.task.toLowerCase().includes(q)) && (!cat || r.cat.includes(cat)));
+    render(filtered);
+}
+render(DATA);
+</script>
+</body>
+</html>
