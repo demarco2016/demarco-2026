@@ -7,251 +7,292 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #f0f2f5;
-            color: #1c1e21;
+            font-family: 'Amazon Ember', Arial, sans-serif;
+            background: #eaeded;
+            color: #0f1111;
             min-height: 100vh;
         }
-        .topbar {
-            background: #1877f2;
+        .navbar {
+            background: #131921;
             color: #fff;
-            padding: 0 16px;
+            padding: 0 20px;
             position: sticky;
             top: 0;
             z-index: 50;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .topbar-inner {
-            max-width: 1100px;
+        .nav-inner {
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            height: 56px;
+            height: 60px;
+            gap: 20px;
         }
-        .topbar-brand {
+        .nav-logo {
             font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .topbar-brand i {
-            display: inline-block;
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #f0f0f5, #818cf8);
-            border-radius: 50%;
-            text-align: center;
-            line-height: 36px;
-            font-style: normal;
-            font-weight: 900;
-            color: #fff;
-            font-size: 16px;
-        }
-        .topbar-info {
-            font-size: 13px;
-            opacity: 0.9;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .topbar-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #818cf8, #38bdf8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 700;
-            color: #fff;
-        }
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
-        .cover {
-            background: linear-gradient(135deg, #1877f2, #0e5a9e);
-            border-radius: 12px;
-            padding: 32px 28px;
-            margin-bottom: 20px;
+            font-weight: 800;
             color: #fff;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        .cover h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.3px; }
-        .cover p { font-size: 14px; opacity: 0.85; margin-top: 4px; }
-        .cover-stats { display: flex; gap: 20px; }
-        .cover-stat { text-align: center; }
-        .cover-stat .num { font-size: 26px; font-weight: 800; }
-        .cover-stat .label { font-size: 11px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.5px; }
-        .search-box {
-            background: #fff;
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .search-box input {
-            flex: 1;
-            min-width: 180px;
-            padding: 9px 14px;
-            border: 1px solid #dadde1;
-            border-radius: 20px;
-            font-size: 14px;
-            outline: none;
-            background: #f0f2f5;
-            transition: all .2s;
-        }
-        .search-box input:focus { border-color: #1877f2; background: #fff; }
-        .search-box select {
-            padding: 9px 14px;
-            border: 1px solid #dadde1;
-            border-radius: 20px;
-            font-size: 13px;
-            outline: none;
-            background: #f0f2f5;
-            color: #1c1e21;
-            cursor: pointer;
-        }
-        .search-box select:focus { border-color: #1877f2; }
-        .card {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-            margin-bottom: 12px;
-            overflow: hidden;
-            transition: box-shadow .15s;
-        }
-        .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
-        .card-header {
-            padding: 14px 18px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-bottom: 1px solid #f0f2f5;
-        }
-        .card-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
-            color: #fff;
-            flex-shrink: 0;
-        }
-        .card-meta { flex: 1; }
-        .card-meta .name { font-weight: 600; font-size: 15px; color: #1c1e21; }
-        .card-meta .sub { font-size: 12px; color: #65676b; }
-        .card-category { margin-left: auto; }
-        .card-body { padding: 12px 18px 16px; }
-        .card-task {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .card-task .task-label {
-            font-size: 15px;
-            color: #1c1e21;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .card-task .task-label .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .card-task .link-btn {
-            display: inline-flex;
             align-items: center;
             gap: 4px;
-            background: #e7f3ff;
-            color: #1877f2;
-            padding: 7px 16px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all .15s;
+            white-space: nowrap;
         }
-        .card-task .link-btn:hover { background: #1877f2; color: #fff; }
-        .card-footer {
-            padding: 8px 18px 12px;
-            border-top: 1px solid #f0f2f5;
+        .nav-logo span { color: #febd69; }
+        .nav-search {
+            flex: 1;
             display: flex;
-            gap: 16px;
-            font-size: 13px;
-            color: #65676b;
+            max-width: 600px;
         }
-        .card-footer span { cursor: default; }
-        .badge-tag {
-            font-size: 11px;
+        .nav-search input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 14px;
+            outline: none;
+        }
+        .nav-search button {
+            background: #febd69;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 16px;
+            color: #131921;
+        }
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .nav-links div { cursor: default; }
+        .nav-links .bold { font-weight: 700; font-size: 13px; }
+        .subnav {
+            background: #232f3e;
+            color: #fff;
+            padding: 0 20px;
+        }
+        .subnav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            height: 40px;
+            gap: 20px;
+            font-size: 13px;
             font-weight: 600;
-            padding: 3px 10px;
-            border-radius: 6px;
         }
-        .badge-defi { background: #e8f5e9; color: #2e7d32; }
-        .badge-l1 { background: #e3f2fd; color: #1565c0; }
-        .badge-ai { background: #f3e5f5; color: #7b1fa2; }
-        .badge-gaming { background: #fff3e0; color: #e65100; }
-        .badge-dex { background: #e0f7fa; color: #00838f; }
-        .badge-bridge { background: #ffebee; color: #c62828; }
-        .badge-other { background: #f5f5f5; color: #616161; }
-        .footer {
-            text-align: center;
-            padding: 24px 0 16px;
-            color: #65676b;
+        .subnav-inner span { cursor: default; color: #ddd; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 16px 16px 0; }
+        .banner {
+            background: linear-gradient(135deg, #131921, #232f3e);
+            color: #fff;
+            border-radius: 8px;
+            padding: 24px 28px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .banner h1 { font-size: 24px; font-weight: 700; }
+        .banner p { font-size: 14px; opacity: 0.8; margin-top: 4px; }
+        .banner .badge {
+            background: #febd69;
+            color: #131921;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
             font-size: 13px;
-            border-top: 1px solid #dadde1;
-            margin-top: 20px;
         }
-        .footer strong { color: #1c1e21; }
-        .footer a { color: #1877f2; text-decoration: none; font-weight: 600; }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .controls select {
+            padding: 8px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            background: #fff;
+            outline: none;
+            cursor: pointer;
+        }
+        .controls .count {
+            font-size: 13px;
+            color: #565959;
+            margin-left: auto;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            transition: all .2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+        .card-img {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: 800;
+            color: rgba(255,255,255,0.3);
+            position: relative;
+        }
+        .card-img .initial {
+            position: absolute;
+            font-size: 52px;
+            font-weight: 900;
+            opacity: 0.15;
+            top: 10px;
+            left: 16px;
+        }
+        .card-body {
+            padding: 14px 16px 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f1111;
+            margin-bottom: 4px;
+        }
+        .card-title:hover { color: #c7511f; }
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 6px;
+        }
+        .card-rating .stars { color: #febd69; font-size: 14px; letter-spacing: 1px; }
+        .card-rating .count { color: #007185; font-size: 12px; }
+        .card-cat {
+            font-size: 11px;
+            color: #565959;
+            margin-bottom: 6px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .card-cat .tag {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .tag-defi { background: #e8f5e9; color: #2e7d32; }
+        .tag-l1 { background: #e3f2fd; color: #1565c0; }
+        .tag-ai { background: #f3e5f5; color: #7b1fa2; }
+        .tag-gaming { background: #fff3e0; color: #e65100; }
+        .tag-dex { background: #e0f7fa; color: #00838f; }
+        .tag-bridge { background: #ffebee; color: #c62828; }
+        .tag-other { background: #f5f5f5; color: #616161; }
+        .card-task {
+            font-size: 13px;
+            color: #565959;
+            margin-bottom: 10px;
+            flex: 1;
+        }
+        .card-task strong { color: #0f1111; }
+        .card-footer {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .card-footer .btn {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: all .15s;
+            min-width: 80px;
+        }
+        .btn-primary {
+            background: #ffd814;
+            color: #0f1111;
+        }
+        .btn-primary:hover { background: #f7ca00; }
+        .btn-secondary {
+            background: #f0f2f2;
+            color: #0f1111;
+            border: 1px solid #d5d9d9;
+        }
+        .btn-secondary:hover { background: #e3e6e6; }
+        .footer {
+            background: #232f3e;
+            color: #ddd;
+            text-align: center;
+            padding: 24px 16px;
+            margin-top: 24px;
+            font-size: 13px;
+        }
+        .footer strong { color: #fff; }
+        .footer a { color: #febd69; text-decoration: none; }
         .footer a:hover { text-decoration: underline; }
         @media (max-width: 640px) {
-            .cover { flex-direction: column; align-items: flex-start; padding: 20px; }
-            .cover h1 { font-size: 20px; }
-            .container { padding: 12px 8px; }
+            .nav-links { display: none; }
+            .nav-search input { font-size: 13px; }
+            .banner { flex-direction: column; align-items: flex-start; }
+            .grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-<div class="topbar">
-    <div class="topbar-inner">
-        <div class="topbar-brand"><i>D</i> DEMARCO 2026</div>
-        <div class="topbar-info">
-            <span>Editor: demarco2016</span>
-            <div class="topbar-avatar">K</div>
+<div class="navbar">
+    <div class="nav-inner">
+        <div class="nav-logo">D<span>EMARCO</span> 2026</div>
+        <div class="nav-search">
+            <input type="text" id="searchInput" placeholder="Search projects..." oninput="filterTable()">
+            <button>ðŸ”</button>
+        </div>
+        <div class="nav-links">
+            <div>Editor<br><span class="bold">demarco2016</span></div>
+            <div>ADMIN<br><span class="bold">Kiravixx</span></div>
         </div>
     </div>
 </div>
+<div class="subnav">
+    <div class="subnav-inner">
+        <span>ðŸ  All</span>
+        <span>ðŸ”¥ Trending</span>
+        <span>â­ Top Rated</span>
+        <span>ðŸ†• New</span>
+        <span>ðŸ“¢ <a href="https://t.me/KIRAVIXXXairdrophub" target="_blank" style="color:#febd69;text-decoration:none;">Telegram</a></span>
+    </div>
+</div>
 <div class="container">
-    <div class="cover">
+    <div class="banner">
         <div>
             <h1>Project Big Potential in 2026</h1>
             <p>Daily tracker Â· Deep work for 6 hours every day</p>
         </div>
-        <div class="cover-stats">
-            <div class="cover-stat"><div class="num" id="totalProjects">0</div><div class="label">Projects</div></div>
-            <div class="cover-stat"><div class="num">âœ¦</div><div class="label">ADMIN Kiravixx</div></div>
-        </div>
+        <div class="badge"><span id="totalProjects">0</span> Projects</div>
     </div>
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search projects..." oninput="filterTable()">
+    <div class="controls">
         <select id="categoryFilter" onchange="filterTable()">
             <option value="">All Categories</option>
             <option value="DeFi / Swap">DeFi / Swap</option>
@@ -265,8 +306,9 @@
             <option value="DeFi / Points">DeFi / Points</option>
             <option value="DeFi / App">DeFi / App</option>
         </select>
+        <div class="count" id="resultCount">Showing 0 projects</div>
     </div>
-    <div id="cardsContainer"></div>
+    <div class="grid" id="cardsContainer"></div>
     <div class="footer">
         âœ¦ <strong>DEMARCO2016</strong> â€” Editor Â· <strong>Kiravixx</strong> â€” ADMIN âœ¦<br>
         <a href="https://t.me/KIRAVIXXXairdrophub" target="_blank">Join on Telegram â†’</a>
@@ -309,58 +351,51 @@ const DATA = [
     {proj:"KiiChain",cat:"L1 / L2 / Testnet",task:"Testnet",link:"https://kiichain.io"},
     {proj:"Nemesis Trade",cat:"DeFi / Swap",task:"Trade",link:"https://nemesistrade.io"},
 ];
-function catBadge(cat) {
-    if (cat.includes("Swap")) return "badge-dex";
-    if (cat.includes("Bridge")) return "badge-bridge";
-    if (cat.includes("DeFi")) return "badge-defi";
-    if (cat.includes("AI")) return "badge-ai";
-    if (cat.includes("Gaming")) return "badge-gaming";
-    if (cat.includes("L1")) return "badge-l1";
-    return "badge-other";
+function tagClass(cat) {
+    if (cat.includes("Swap")) return "tag-dex";
+    if (cat.includes("Bridge")) return "tag-bridge";
+    if (cat.includes("DeFi")) return "tag-defi";
+    if (cat.includes("AI")) return "tag-ai";
+    if (cat.includes("Gaming")) return "tag-gaming";
+    if (cat.includes("L1")) return "tag-l1";
+    return "tag-other";
 }
-function catColor(cat) {
-    if (cat.includes("Swap")) return "#00838f";
-    if (cat.includes("Bridge")) return "#c62828";
-    if (cat.includes("DeFi")) return "#2e7d32";
-    if (cat.includes("AI")) return "#7b1fa2";
-    if (cat.includes("Gaming")) return "#e65100";
-    if (cat.includes("L1")) return "#1565c0";
-    return "#616161";
-}
-function avatarBg(name) {
-    const colors = ["#1877f2","#e63946","#2a9d8f","#e9c46a","#f4a261","#264653","#6b5b95","#d45087","#2196f3","#4caf50"];
+function cardBg(name) {
+    const colors = ["#374151","#991b1b","#065f46","#92400e","#1e40af","#6b21a8","#be185d","#15803d","#b45309","#1d4ed8"];
     let hash = 0;
     for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
     return colors[Math.abs(hash) % colors.length];
 }
+function rating() {
+    const stars = Math.floor(Math.random() * 2) + 3;
+    return "â˜…".repeat(stars) + "â˜†".repeat(5-stars);
+}
 function render(rows) {
     const container = document.getElementById("cardsContainer");
-    container.innerHTML = rows.map((r,i)=>`
+    container.innerHTML = rows.map(r => `
         <div class="card">
-            <div class="card-header">
-                <div class="card-avatar" style="background:${avatarBg(r.proj)}">${r.proj.charAt(0)}</div>
-                <div class="card-meta">
-                    <div class="name">${r.proj}</div>
-                    <div class="sub">${r.task} Â· #${i+1}</div>
-                </div>
-                <div class="card-category"><span class="badge-tag ${catBadge(r.cat)}">${r.cat}</span></div>
+            <div class="card-img" style="background:linear-gradient(135deg,${cardBg(r.proj)},${cardBg(r.proj)}cc)">
+                <div class="initial">${r.proj.charAt(0)}</div>
             </div>
             <div class="card-body">
-                <div class="card-task">
-                    <div class="task-label">
-                        <span class="dot" style="background:${catColor(r.cat)}"></span>
-                        ${r.task}
-                    </div>
-                    <a href="${r.link}" target="_blank" class="link-btn">Open â†’</a>
+                <div class="card-title">${r.proj}</div>
+                <div class="card-rating">
+                    <span class="stars">${rating()}</span>
+                    <span class="count">(${Math.floor(Math.random()*50)+10})</span>
                 </div>
-            </div>
-            <div class="card-footer">
-                <span>ðŸ’¬ 0</span>
-                <span>ðŸ”— Share</span>
+                <div class="card-cat">
+                    <span class="tag ${tagClass(r.cat)}">${r.cat}</span>
+                </div>
+                <div class="card-task">Task: <strong>${r.task}</strong></div>
+                <div class="card-footer">
+                    <a href="${r.link}" target="_blank" class="btn btn-primary">Open â†’</a>
+                    <span class="btn btn-secondary">ðŸ’¬</span>
+                </div>
             </div>
         </div>
     `).join("");
     document.getElementById("totalProjects").textContent = rows.length;
+    document.getElementById("resultCount").textContent = `Showing ${rows.length} project${rows.length!==1?'s':''}`;
 }
 function filterTable() {
     const q = document.getElementById("searchInput").value.toLowerCase();
