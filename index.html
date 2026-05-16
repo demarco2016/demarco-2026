@@ -267,7 +267,7 @@
         <div class="nav-logo">D<span>EMARCO</span> 2026</div>
         <div class="nav-search">
             <input type="text" id="searchInput" placeholder="Search projects..." oninput="filterTable()">
-            <button>ðŸ”</button>
+            <button>Search</button>
         </div>
         <div class="nav-links">
             <div>Editor<br><span class="bold">demarco2016</span></div>
@@ -277,11 +277,11 @@
 </div>
 <div class="subnav">
     <div class="subnav-inner">
-        <span>ðŸ  All</span>
-        <span>ðŸ”¥ Trending</span>
-        <span>â­ Top Rated</span>
-        <span>ðŸ†• New</span>
-        <span>ðŸ“¢ Telegram</span>
+        <span>All</span>
+        <span>Trending</span>
+        <span>Top Rated</span>
+        <span>New</span>
+        <span>Telegram</span>
     </div>
 </div>
 <div class="container">
@@ -310,8 +310,8 @@
     </div>
     <div class="grid" id="cardsContainer"></div>
     <div class="footer">
-        âœ¦ <strong>DEMARCO2016</strong> â€” Editor Â· <strong>Kiravixx</strong> â€” ADMIN âœ¦<br>
-        <a href="https://t.me/KIRAVIXXXairdrophub" target="_blank">Join on Telegram â†’</a>
+        <strong>DEMARCO2016</strong> â€” Editor Â· <strong>Kiravixx</strong> â€” ADMIN <br>
+        <a href="https://t.me/KIRAVIXXXairdrophub" target="_blank">Join on Telegram ></a>
     </div>
 </div>
 <script>
@@ -368,7 +368,7 @@ function cardBg(name) {
 }
 function rating() {
     const stars = Math.floor(Math.random() * 2) + 3;
-    return "â˜…".repeat(stars) + "â˜†".repeat(5-stars);
+    return "*".repeat(stars) + "o".repeat(5-stars);
 }
 function render(rows) {
     const container = document.getElementById("cardsContainer");
@@ -388,8 +388,7 @@ function render(rows) {
                 </div>
                 <div class="card-task">Task: <strong>${r.task}</strong></div>
                 <div class="card-footer">
-                    <a href="${r.link}" target="_blank" class="btn btn-primary">Open â†’</a>
-                    <span class="btn btn-secondary">ðŸ’¬</span>
+                    <a href="${r.link}" target="_blank" class="btn btn-primary">Open</a>
                 </div>
             </div>
         </div>
