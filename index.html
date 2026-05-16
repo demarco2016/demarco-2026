@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEMARCO 2026 - Project Big Potential</title>
+    <title>DEMARCO 2026 â€” Project Tracker</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Amazon Ember', Arial, sans-serif;
-            background: #eaeded;
-            color: #0f1111;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #fff;
+            color: #171a20;
             min-height: 100vh;
         }
         .navbar {
-            background: #131921;
-            color: #fff;
-            padding: 0 20px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 0 24px;
             position: sticky;
             top: 0;
             z-index: 50;
@@ -25,239 +25,212 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
-            height: 60px;
-            gap: 20px;
+            height: 56px;
+            gap: 24px;
         }
         .nav-logo {
-            font-size: 22px;
-            font-weight: 800;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #171a20;
         }
-        .nav-logo span { color: #febd69; }
+        .nav-logo span { color: #da291c; }
         .nav-search {
             flex: 1;
             display: flex;
-            max-width: 600px;
+            max-width: 480px;
         }
         .nav-search input {
             flex: 1;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px 0 0 4px;
+            padding: 8px 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
             font-size: 14px;
             outline: none;
+            background: #f5f5f5;
+            transition: .2s;
+        }
+        .nav-search input:focus {
+            border-color: #da291c;
+            background: #fff;
         }
         .nav-search button {
-            background: #febd69;
+            background: none;
             border: none;
-            padding: 8px 14px;
-            border-radius: 0 4px 4px 0;
+            padding: 8px 12px;
             cursor: pointer;
-            font-size: 16px;
-            color: #131921;
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
         }
         .nav-links {
             display: flex;
-            gap: 18px;
+            gap: 20px;
             font-size: 12px;
             white-space: nowrap;
         }
         .nav-links div { cursor: default; }
-        .nav-links .bold { font-weight: 700; font-size: 13px; }
-        .subnav {
-            background: #232f3e;
-            color: #fff;
-            padding: 0 20px;
-        }
-        .subnav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            height: 40px;
-            gap: 20px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .subnav-inner span { cursor: default; color: #ddd; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 16px 16px 0; }
+        .nav-links .bold { font-weight: 600; font-size: 13px; color: #171a20; }
+        .nav-links .label { color: #999; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px 24px 0; }
         .banner {
-            background: linear-gradient(135deg, #131921, #232f3e);
-            color: #fff;
-            border-radius: 8px;
-            padding: 24px 28px;
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
+            margin-bottom: 28px;
         }
-        .banner h1 { font-size: 24px; font-weight: 700; }
-        .banner p { font-size: 14px; opacity: 0.8; margin-top: 4px; }
-        .banner .badge {
-            background: #febd69;
-            color: #131921;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 13px;
+        .banner h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #171a20;
+            letter-spacing: -.5px;
+        }
+        .banner p {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+        .banner-meta {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-top: 8px;
+        }
+        .banner-meta .badge {
+            background: #da291c;
+            color: #fff;
+            padding: 4px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
         }
         .controls {
             display: flex;
             gap: 10px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
             align-items: center;
         }
         .controls select {
             padding: 8px 14px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
             font-size: 13px;
             background: #fff;
             outline: none;
             cursor: pointer;
+            color: #171a20;
         }
+        .controls select:focus { border-color: #da291c; }
         .controls .count {
             font-size: 13px;
-            color: #565959;
+            color: #999;
             margin-left: auto;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 16px;
         }
         .card {
-            background: #fff;
+            border: 1px solid #e5e5e5;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            transition: all .2s;
+            transition: all .25s;
             display: flex;
             flex-direction: column;
+            background: #fff;
         }
         .card:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-            transform: translateY(-2px);
+            border-color: #da291c;
+            box-shadow: 0 4px 24px rgba(218,41,28,0.08);
         }
         .card-img {
-            height: 120px;
+            height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
-            font-weight: 800;
-            color: rgba(255,255,255,0.3);
-            position: relative;
+            background: #fafafa;
+            border-bottom: 1px solid #eee;
         }
         .card-img .initial {
-            position: absolute;
-            font-size: 52px;
-            font-weight: 900;
-            opacity: 0.15;
-            top: 10px;
-            left: 16px;
+            font-size: 32px;
+            font-weight: 700;
+            color: #ccc;
+            text-transform: uppercase;
         }
         .card-body {
-            padding: 14px 16px 16px;
+            padding: 16px 18px 18px;
             flex: 1;
             display: flex;
             flex-direction: column;
         }
         .card-title {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 600;
-            color: #0f1111;
-            margin-bottom: 4px;
+            color: #171a20;
+            margin-bottom: 2px;
         }
-        .card-title:hover { color: #c7511f; }
-        .card-rating {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: 6px;
-        }
-        .card-rating .stars { color: #febd69; font-size: 14px; letter-spacing: 1px; }
-        .card-rating .count { color: #007185; font-size: 12px; }
         .card-cat {
             font-size: 11px;
-            color: #565959;
-            margin-bottom: 6px;
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
-        .card-cat .tag {
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-        .tag-defi { background: #e8f5e9; color: #2e7d32; }
-        .tag-l1 { background: #e3f2fd; color: #1565c0; }
-        .tag-ai { background: #f3e5f5; color: #7b1fa2; }
-        .tag-gaming { background: #fff3e0; color: #e65100; }
-        .tag-dex { background: #e0f7fa; color: #00838f; }
-        .tag-bridge { background: #ffebee; color: #c62828; }
-        .tag-other { background: #f5f5f5; color: #616161; }
         .card-task {
             font-size: 13px;
-            color: #565959;
-            margin-bottom: 10px;
+            color: #666;
+            margin-bottom: 14px;
             flex: 1;
         }
-        .card-task strong { color: #0f1111; }
+        .card-task strong { color: #171a20; }
         .card-footer {
             display: flex;
             gap: 8px;
             align-items: center;
-            flex-wrap: wrap;
         }
         .card-footer .btn {
             flex: 1;
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 10px 16px;
+            border-radius: 4px;
             border: none;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
-            transition: all .15s;
-            min-width: 80px;
+            transition: all .2s;
+            letter-spacing: .5px;
+            text-transform: uppercase;
         }
         .btn-primary {
-            background: #ffd814;
-            color: #0f1111;
+            background: #da291c;
+            color: #fff;
         }
-        .btn-primary:hover { background: #f7ca00; }
+        .btn-primary:hover { background: #b71c1c; }
         .btn-secondary {
-            background: #f0f2f2;
-            color: #0f1111;
-            border: 1px solid #d5d9d9;
+            background: #fff;
+            color: #171a20;
+            border: 1px solid #ccc;
         }
-        .btn-secondary:hover { background: #e3e6e6; }
+        .btn-secondary:hover { border-color: #da291c; color: #da291c; }
         .footer {
-            background: #232f3e;
-            color: #ddd;
+            border-top: 1px solid #eee;
+            color: #999;
             text-align: center;
             padding: 24px 16px;
-            margin-top: 24px;
-            font-size: 13px;
+            margin-top: 40px;
+            font-size: 12px;
         }
-        .footer strong { color: #fff; }
-        .footer a { color: #febd69; text-decoration: none; }
+        .footer strong { color: #171a20; font-weight: 600; }
+        .footer a { color: #da291c; text-decoration: none; font-weight: 500; }
         .footer a:hover { text-decoration: underline; }
+        .footer span { margin: 0 6px; color: #ccc; }
         @media (max-width: 640px) {
             .nav-links { display: none; }
             .nav-search input { font-size: 13px; }
-            .banner { flex-direction: column; align-items: flex-start; }
             .grid { grid-template-columns: 1fr; }
+            .container { padding: 16px 16px 0; }
+            .banner h1 { font-size: 22px; }
         }
     </style>
 </head>
@@ -270,48 +243,39 @@
             <button>Search</button>
         </div>
         <div class="nav-links">
-            <div>Editor<br><span class="bold">demarco2016</span></div>
-            <div>ADMIN<br><span class="bold">Kiravixx</span></div>
+            <div><span class="label">Editor</span><br><span class="bold">demarco2016</span></div>
+            <div><span class="label">Admin</span><br><span class="bold">Kiravixx</span></div>
         </div>
-    </div>
-</div>
-<div class="subnav">
-    <div class="subnav-inner">
-        <span>All</span>
-        <span>Trending</span>
-        <span>Top Rated</span>
-        <span>New</span>
-        <span>Telegram</span>
     </div>
 </div>
 <div class="container">
     <div class="banner">
-        <div>
-            <h1>Project Big Potential in 2026</h1>
-            <p>Daily tracker Â· Deep work for 6 hours every day</p>
+        <h1>Project Big Potential in 2026</h1>
+        <p>Daily tracker â€” Deep work for 6 hours every day</p>
+        <div class="banner-meta">
+            <div class="badge"><span id="totalProjects">0</span> Projects</div>
+            <select id="categoryFilter" onchange="filterTable()">
+                <option value="">All Categories</option>
+                <option value="DeFi / Swap">DeFi / Swap</option>
+                <option value="L1 / L2 / Testnet">L1 / L2 / Testnet</option>
+                <option value="AI / Testnet">AI / Testnet</option>
+                <option value="AI / App">AI / App</option>
+                <option value="Gaming / App">Gaming / App</option>
+                <option value="DeFi / Bridge">DeFi / Bridge</option>
+                <option value="DeFi / Community">DeFi / Community</option>
+                <option value="DeFi / Rewards">DeFi / Rewards</option>
+                <option value="DeFi / Points">DeFi / Points</option>
+                <option value="DeFi / App">DeFi / App</option>
+            </select>
         </div>
-        <div class="badge"><span id="totalProjects">0</span> Projects</div>
     </div>
     <div class="controls">
-        <select id="categoryFilter" onchange="filterTable()">
-            <option value="">All Categories</option>
-            <option value="DeFi / Swap">DeFi / Swap</option>
-            <option value="L1 / L2 / Testnet">L1 / L2 / Testnet</option>
-            <option value="AI / Testnet">AI / Testnet</option>
-            <option value="AI / App">AI / App</option>
-            <option value="Gaming / App">Gaming / App</option>
-            <option value="DeFi / Bridge">DeFi / Bridge</option>
-            <option value="DeFi / Community">DeFi / Community</option>
-            <option value="DeFi / Rewards">DeFi / Rewards</option>
-            <option value="DeFi / Points">DeFi / Points</option>
-            <option value="DeFi / App">DeFi / App</option>
-        </select>
         <div class="count" id="resultCount">Showing 0 projects</div>
     </div>
     <div class="grid" id="cardsContainer"></div>
     <div class="footer">
-        <strong>DEMARCO2016</strong> â€” Editor Â· <strong>Kiravixx</strong> â€” ADMIN <br>
-        <a href="https://t.me/KIRAVIXXXairdrophub" target="_blank">Join on Telegram ></a>
+        <strong>DEMARCO2016</strong><span>â€”</span>Editor<span>Â·</span><strong>Kiravixx</strong><span>â€”</span>ADMIN<br>
+        <a href="https://t.me/KIRAVIXXXairdrophub" target="_blank">Join on Telegram</a>
     </div>
 </div>
 <script>
@@ -351,44 +315,26 @@ const DATA = [
     {proj:"KiiChain",cat:"L1 / L2 / Testnet",task:"Testnet",link:"https://kiichain.io"},
     {proj:"Nemesis Trade",cat:"DeFi / Swap",task:"Trade",link:"https://nemesistrade.io"},
 ];
-function tagClass(cat) {
-    if (cat.includes("Swap")) return "tag-dex";
-    if (cat.includes("Bridge")) return "tag-bridge";
-    if (cat.includes("DeFi")) return "tag-defi";
-    if (cat.includes("AI")) return "tag-ai";
-    if (cat.includes("Gaming")) return "tag-gaming";
-    if (cat.includes("L1")) return "tag-l1";
-    return "tag-other";
-}
-function cardBg(name) {
-    const colors = ["#374151","#991b1b","#065f46","#92400e","#1e40af","#6b21a8","#be185d","#15803d","#b45309","#1d4ed8"];
+const COLORS = ["#da291c","#171a20","#333","#555","#777","#999","#bbb","#ccc","#ddd","#eee"];
+function cardColor(name) {
     let hash = 0;
     for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    return colors[Math.abs(hash) % colors.length];
-}
-function rating() {
-    const stars = Math.floor(Math.random() * 2) + 3;
-    return "*".repeat(stars) + "o".repeat(5-stars);
+    return COLORS[Math.abs(hash) % COLORS.length];
 }
 function render(rows) {
     const container = document.getElementById("cardsContainer");
     container.innerHTML = rows.map(r => `
         <div class="card">
-            <div class="card-img" style="background:linear-gradient(135deg,${cardBg(r.proj)},${cardBg(r.proj)}cc)">
-                <div class="initial">${r.proj.charAt(0)}</div>
+            <div class="card-img">
+                <div class="initial" style="color:${cardColor(r.proj)}">${r.proj.charAt(0)}</div>
             </div>
             <div class="card-body">
                 <div class="card-title">${r.proj}</div>
-                <div class="card-rating">
-                    <span class="stars">${rating()}</span>
-                    <span class="count">(${Math.floor(Math.random()*50)+10})</span>
-                </div>
-                <div class="card-cat">
-                    <span class="tag ${tagClass(r.cat)}">${r.cat}</span>
-                </div>
-                <div class="card-task">Task: <strong>${r.task}</strong></div>
+                <div class="card-cat">${r.cat}</div>
+                <div class="card-task"><strong>${r.task}</strong></div>
                 <div class="card-footer">
                     <a href="${r.link}" target="_blank" class="btn btn-primary">Open</a>
+                    <a href="${r.link}" target="_blank" class="btn btn-secondary">Info</a>
                 </div>
             </div>
         </div>
