@@ -3,193 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEMARCO Â· Portfolio 2026</title>
+    <title>DEMARCO 2026 - Project Big Potential</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #0a0b0e;
-            color: #f0f0f5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            color: #1c1e21;
             min-height: 100vh;
         }
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(ellipse at 20% 50%, rgba(37,99,235,0.12) 0%, transparent 60%),
-                        radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.08) 0%, transparent 50%),
-                        radial-gradient(ellipse at 50% 80%, rgba(6,182,212,0.06) 0%, transparent 50%);
-            z-index: -1;
-        }
-        .glass {
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-        .nav {
+        .topbar {
+            background: #1877f2;
+            color: #fff;
+            padding: 0 16px;
             position: sticky;
             top: 0;
             z-index: 50;
-            background: rgba(10,11,14,0.8);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .nav-inner {
-            max-width: 1280px;
+        .topbar-inner {
+            max-width: 1100px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 64px;
-            padding: 0 24px;
+            height: 56px;
         }
-        .nav-brand { font-weight: 900; font-size: 20px; letter-spacing: -0.5px; background: linear-gradient(135deg, #f0f0f5, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .nav-tag { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 500; }
-        .container { max-width: 1280px; margin: 0 auto; padding: 32px 24px; }
-        .hero {
+        .topbar-brand {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .topbar-brand i {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #f0f0f5, #818cf8);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            font-style: normal;
+            font-weight: 900;
+            color: #fff;
+            font-size: 16px;
+        }
+        .topbar-info {
+            font-size: 13px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .topbar-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #818cf8, #38bdf8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+        .cover {
+            background: linear-gradient(135deg, #1877f2, #0e5a9e);
+            border-radius: 12px;
+            padding: 32px 28px;
+            margin-bottom: 20px;
+            color: #fff;
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 32px;
+            align-items: center;
             flex-wrap: wrap;
             gap: 16px;
         }
-        .hero h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; color: #f0f0f5; }
-        .hero p { font-size: 14px; color: rgba(255,255,255,0.4); margin-top: 4px; }
-        .stats { display: flex; gap: 12px; flex-wrap: wrap; }
-        .stat {
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 16px;
-            padding: 14px 24px;
-            text-align: center;
-            min-width: 110px;
-        }
-        .stat .num { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #818cf8, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .stat .label { font-size: 11px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; font-weight: 600; }
-        .filters {
+        .cover h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.3px; }
+        .cover p { font-size: 14px; opacity: 0.85; margin-top: 4px; }
+        .cover-stats { display: flex; gap: 20px; }
+        .cover-stat { text-align: center; }
+        .cover-stat .num { font-size: 26px; font-weight: 800; }
+        .cover-stat .label { font-size: 11px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.5px; }
+        .search-box {
+            background: #fff;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
             display: flex;
             gap: 10px;
-            margin-bottom: 24px;
             flex-wrap: wrap;
+            align-items: center;
         }
-        .filters input {
+        .search-box input {
             flex: 1;
-            min-width: 220px;
-            padding: 12px 18px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            min-width: 180px;
+            padding: 9px 14px;
+            border: 1px solid #dadde1;
+            border-radius: 20px;
             font-size: 14px;
             outline: none;
-            color: #f0f0f5;
+            background: #f0f2f5;
             transition: all .2s;
         }
-        .filters input::placeholder { color: rgba(255,255,255,0.25); }
-        .filters input:focus { border-color: rgba(129,140,248,0.4); box-shadow: 0 0 0 3px rgba(129,140,248,0.1); }
-        .filters select {
-            padding: 12px 18px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            font-size: 14px;
-            outline: none;
-            color: #f0f0f5;
-            cursor: pointer;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-        .filters select option { background: #1a1b23; color: #f0f0f5; }
-        .filters select:focus { border-color: rgba(129,140,248,0.4); }
-        .table-wrap {
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.06);
+        .search-box input:focus { border-color: #1877f2; background: #fff; }
+        .search-box select {
+            padding: 9px 14px;
+            border: 1px solid #dadde1;
             border-radius: 20px;
-            overflow: hidden;
+            font-size: 13px;
+            outline: none;
+            background: #f0f2f5;
+            color: #1c1e21;
+            cursor: pointer;
         }
-        table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 700px; }
-        thead { background: rgba(255,255,255,0.03); }
-        thead th { padding: 14px 18px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.3); border-bottom: 1px solid rgba(255,255,255,0.06); }
-        tbody tr { border-bottom: 1px solid rgba(255,255,255,0.03); transition: all .15s; }
-        tbody tr:hover { background: rgba(255,255,255,0.05); }
-        tbody td { padding: 16px 18px; vertical-align: middle; }
-        .num-col { color: rgba(255,255,255,0.2); font-weight: 500; width: 32px; font-size: 13px; }
-        .proj-name { font-weight: 600; color: #f0f0f5; }
-        .badge { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 8px; color: #f0f0f5; }
-        .badge-defi { background: rgba(5,150,105,0.25); }
-        .badge-l1 { background: rgba(37,99,235,0.25); }
-        .badge-ai { background: rgba(124,58,237,0.25); }
-        .badge-gaming { background: rgba(234,88,12,0.25); }
-        .badge-dex { background: rgba(8,145,178,0.25); }
-        .badge-bridge { background: rgba(220,38,38,0.25); }
-        .badge-other { background: rgba(255,255,255,0.1); }
-        .task-tag { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 500; }
-        .link-btn {
+        .search-box select:focus { border-color: #1877f2; }
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: box-shadow .15s;
+        }
+        .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+        .card-header {
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+        .card-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .card-meta { flex: 1; }
+        .card-meta .name { font-weight: 600; font-size: 15px; color: #1c1e21; }
+        .card-meta .sub { font-size: 12px; color: #65676b; }
+        .card-category { margin-left: auto; }
+        .card-body { padding: 12px 18px 16px; }
+        .card-task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .card-task .task-label {
+            font-size: 15px;
+            color: #1c1e21;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-task .task-label .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .card-task .link-btn {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            color: rgba(255,255,255,0.5);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 6px 14px;
+            gap: 4px;
+            background: #e7f3ff;
+            color: #1877f2;
+            padding: 7px 16px;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: all .2s;
-            background: rgba(255,255,255,0.03);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all .15s;
         }
-        .link-btn:hover { background: rgba(129,140,248,0.15); border-color: rgba(129,140,248,0.3); color: #a5b4fc; }
+        .card-task .link-btn:hover { background: #1877f2; color: #fff; }
+        .card-footer {
+            padding: 8px 18px 12px;
+            border-top: 1px solid #f0f2f5;
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: #65676b;
+        }
+        .card-footer span { cursor: default; }
+        .badge-tag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 6px;
+        }
+        .badge-defi { background: #e8f5e9; color: #2e7d32; }
+        .badge-l1 { background: #e3f2fd; color: #1565c0; }
+        .badge-ai { background: #f3e5f5; color: #7b1fa2; }
+        .badge-gaming { background: #fff3e0; color: #e65100; }
+        .badge-dex { background: #e0f7fa; color: #00838f; }
+        .badge-bridge { background: #ffebee; color: #c62828; }
+        .badge-other { background: #f5f5f5; color: #616161; }
         .footer {
             text-align: center;
-            padding: 40px 0 20px;
-            color: rgba(255,255,255,0.2);
+            padding: 24px 0 16px;
+            color: #65676b;
             font-size: 13px;
-            border-top: 1px solid rgba(255,255,255,0.04);
-            margin-top: 40px;
+            border-top: 1px solid #dadde1;
+            margin-top: 20px;
         }
-        .footer strong { color: rgba(255,255,255,0.5); }
-        .footer a { color: rgba(129,140,248,0.6); text-decoration: none; transition: color .2s; }
-        .footer a:hover { color: #a5b4fc; }
+        .footer strong { color: #1c1e21; }
+        .footer a { color: #1877f2; text-decoration: none; font-weight: 600; }
+        .footer a:hover { text-decoration: underline; }
         @media (max-width: 640px) {
-            .hero { flex-direction: column; align-items: flex-start; }
-            .container { padding: 20px 16px; }
-            thead th, tbody td { padding: 12px 14px; font-size: 13px; }
+            .cover { flex-direction: column; align-items: flex-start; padding: 20px; }
+            .cover h1 { font-size: 20px; }
+            .container { padding: 12px 8px; }
         }
     </style>
 </head>
 <body>
-<div class="nav">
-    <div class="nav-inner">
-        <div class="nav-brand">â—† DEMARCO 2026</div>
-        <div class="nav-tag">Ã©diteur: demarco2016 Â· ADMIN: Kiravixx</div>
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="topbar-brand"><i>D</i> DEMARCO 2026</div>
+        <div class="topbar-info">
+            <span>Ã©diteur: demarco2016</span>
+            <div class="topbar-avatar">K</div>
+        </div>
     </div>
 </div>
 <div class="container">
-    <div class="hero">
+    <div class="cover">
         <div>
             <h1>Project Big Potential in 2026</h1>
             <p>Daily tracker Â· Deep work for 6 hours every day</p>
         </div>
-        <div class="stats">
-            <div class="stat"><div class="num" id="totalProjects">0</div><div class="label">Projects</div></div>
-
+        <div class="cover-stats">
+            <div class="cover-stat"><div class="num" id="totalProjects">0</div><div class="label">Projects</div></div>
+            <div class="cover-stat"><div class="num">âœ¦</div><div class="label">ADMIN Kiravixx</div></div>
         </div>
     </div>
-    <div class="filters">
-        <input type="text" id="searchInput" placeholder="Search project or task..." oninput="filterTable()">
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search projects..." oninput="filterTable()">
         <select id="categoryFilter" onchange="filterTable()">
             <option value="">All Categories</option>
             <option value="DeFi / Swap">DeFi / Swap</option>
@@ -204,14 +266,10 @@
             <option value="DeFi / App">DeFi / App</option>
         </select>
     </div>
-    <div class="table-wrap">
-        <table>
-            <thead><tr><th>#</th><th>Project</th><th>Category</th><th>Task</th><th>Link</th></tr></thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-    </div>
+    <div id="cardsContainer"></div>
     <div class="footer">
-        âœ¦ <strong>DEMARCO2016</strong> â€” Ã‰diteur Â· <strong>Kiravixx</strong> â€” ADMIN âœ¦<br><a href="https://t.me/KIRAVIXXXairdrophub" target="_blank">Join on Telegram â†’</a>
+        âœ¦ <strong>DEMARCO2016</strong> â€” Ã‰diteur Â· <strong>Kiravixx</strong> â€” ADMIN âœ¦<br>
+        <a href="https://t.me/KIRAVIXXXairdrophub" target="_blank">Join on Telegram â†’</a>
     </div>
 </div>
 <script>
@@ -250,7 +308,6 @@ const DATA = [
     {proj:"SimpleChain",cat:"L1 / L2 / Testnet",task:"Task",link:"https://simplechain.io"},
     {proj:"KiiChain",cat:"L1 / L2 / Testnet",task:"Testnet",link:"https://kiichain.io"},
     {proj:"Nemesis Trade",cat:"DeFi / Swap",task:"Trade",link:"https://nemesistrade.io"},
-
 ];
 function catBadge(cat) {
     if (cat.includes("Swap")) return "badge-dex";
@@ -261,17 +318,47 @@ function catBadge(cat) {
     if (cat.includes("L1")) return "badge-l1";
     return "badge-other";
 }
+function catColor(cat) {
+    if (cat.includes("Swap")) return "#00838f";
+    if (cat.includes("Bridge")) return "#c62828";
+    if (cat.includes("DeFi")) return "#2e7d32";
+    if (cat.includes("AI")) return "#7b1fa2";
+    if (cat.includes("Gaming")) return "#e65100";
+    if (cat.includes("L1")) return "#1565c0";
+    return "#616161";
+}
+function avatarBg(name) {
+    const colors = ["#1877f2","#e63946","#2a9d8f","#e9c46a","#f4a261","#264653","#6b5b95","#d45087","#2196f3","#4caf50"];
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    return colors[Math.abs(hash) % colors.length];
+}
 function render(rows) {
-    const tbody = document.getElementById("tableBody");
-    tbody.innerHTML = rows.map((r,i)=>`
-        <tr>
-            <td class="num-col">${i+1}</td>
-            <td><div class="proj-name">${r.proj}</div></td>
-            <td><span class="badge ${catBadge(r.cat)}">${r.cat}</span></td>
-            <td><span class="task-tag">${r.task}</span></td>
-            <td><a href="${r.link}" target="_blank" class="link-btn">Open â†’</a></td>
-
-        </tr>
+    const container = document.getElementById("cardsContainer");
+    container.innerHTML = rows.map((r,i)=>`
+        <div class="card">
+            <div class="card-header">
+                <div class="card-avatar" style="background:${avatarBg(r.proj)}">${r.proj.charAt(0)}</div>
+                <div class="card-meta">
+                    <div class="name">${r.proj}</div>
+                    <div class="sub">${r.task} Â· #${i+1}</div>
+                </div>
+                <div class="card-category"><span class="badge-tag ${catBadge(r.cat)}">${r.cat}</span></div>
+            </div>
+            <div class="card-body">
+                <div class="card-task">
+                    <div class="task-label">
+                        <span class="dot" style="background:${catColor(r.cat)}"></span>
+                        ${r.task}
+                    </div>
+                    <a href="${r.link}" target="_blank" class="link-btn">Open â†’</a>
+                </div>
+            </div>
+            <div class="card-footer">
+                <span>ðŸ’¬ 0</span>
+                <span>ðŸ”— Share</span>
+            </div>
+        </div>
     `).join("");
     document.getElementById("totalProjects").textContent = rows.length;
 }
