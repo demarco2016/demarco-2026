@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEMARCO 2026 — Reel</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --blue: #003ea8;
+            --blue-dark: #002d7a;
+            --gold: #ffd200;
+            --ink: #1e1e1e;
+            --muted: #888;
+            --line: #e5e5e5;
+            --paper: #f4f4f6;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            overflow: hidden;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* 1080×1920 canvas; scaled to fit the window in preview, 1:1 in export */
+        #stage {
+            position: relative;
+            width: 1080px;
+            height: 1920px;
+            flex: none;
+            overflow: hidden;
+            background: radial-gradient(120% 80% at 50% 0%, #0a4fc4 0%, var(--blue) 45%, var(--blue-dark) 100%);
+            transform-origin: center center;
+        }
+        .grain {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+            background-size: 72px 72px;
+        }
+        .glow {
+            position: absolute;
+            width: 1400px;
+            height: 1400px;
+            left: -160px;
+            top: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,210,0,0.16) 0%, rgba(255,210,0,0) 60%);
+        }
+
+        /* ---------- navbar (same as index.html) ---------- */
+        .navbar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 150px;
+            padding: 0 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--blue);
+            border-bottom: 2px solid rgba(255,210,0,0.35);
+            z-index: 5;
+        }
+        .nav-logo { font-size: 46px; font-weight: 700; letter-spacing: 3px; }
+        .nav-logo span { color: var(--gold); }
+        .nav-links { display: flex; gap: 48px; font-size: 28px; text-align: left; }
+        .nav-links .label { color: rgba(255,255,255,0.5); font-size: 18px; text-transform: uppercase; letter-spacing: 2px; }
+        .nav-links .bold { font-weight: 600; }
+
+        /* ---------- scenes ---------- */
+        .scene {
+            position: absolute;
+            left: 0; right: 0;
+            top: 150px;
+            height: 1220px;
+            padding: 0 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+        .kicker {
+            font-size: 30px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 28px;
+        }
+        h1 {
+            font-size: 128px;
+            font-weight: 300;
+            letter-spacing: -3px;
+            line-height: 1.02;
+        }
+        h1 b { font-weight: 700; color: var(--gold); }
+        .sub {
+            font-size: 40px;
+            color: rgba(255,255,255,0.72);
+            font-weight: 300;
+            margin-top: 32px;
+        }
+        .gold-rule {
+            height: 8px;
+            width: 0;
+            background: linear-gradient(90deg, #fff1a6, var(--gold) 40%, #c99a00);
+            border-radius: 4px;
+            margin-top: 48px;
+        }
+
+        /* scene 2 — counter */
+        .counter {
+            font-size: 420px;
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -12px;
+            color: var(--gold);
+            text-shadow: 0 0 80px rgba(255,210,0,0.35);
+        }
+        .badge {
+            display: inline-block;
+            align-self: flex-start;
+            margin-top: 36px;
+            background: #fff;
+            color: var(--blue);
+            padding: 16px 44px;
+            border-radius: 10px;
+            font-size: 48px;
+            font-weight: 600;
+        }
+
+        /* scene 3 — cards (same look as index.html) */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 40px;
+        }
+        .card {
+            background: #fff;
+            border: 2px solid var(--line);
+            border-radius: 14px;
+            overflow: hidden;
+            color: var(--ink);
+            box-shadow: 0 24px 60px rgba(0,20,70,0.35);
+        }
+        .card-img {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f8fa;
+            border-bottom: 2px solid #eee;
+        }
+        .card-img .initial { font-size: 64px; font-weight: 700; color: var(--blue); }
+        .card-body { padding: 28px 32px 32px; }
+        .card-title { font-size: 38px; font-weight: 600; }
+        .card-cat { font-size: 22px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin: 4px 0 14px; }
+        .card-task { font-size: 30px; font-weight: 600; margin-bottom: 22px; }
+        .card-footer { display: flex; gap: 14px; }
+        .btn {
+            flex: 1;
+            text-align: center;
+            padding: 16px 0;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .btn-primary { background: var(--blue); color: #fff; }
+        .btn-secondary { border: 2px solid #ccc; color: var(--ink); }
+
+        /* scene 4 — categories */
+        .chips { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 56px; }
+        .chip {
+            padding: 20px 34px;
+            border-radius: 999px;
+            border: 3px solid rgba(255,255,255,0.35);
+            font-size: 36px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.06);
+        }
+        .chip.hot { border-color: var(--gold); color: var(--gold); background: rgba(255,210,0,0.08); }
+
+        /* scene 5 — CTA */
+        .cta {
+            align-self: flex-start;
+            margin-top: 64px;
+            padding: 30px 64px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #fff1a6, var(--gold) 45%, #d9a800);
+            color: var(--blue-dark);
+            font-size: 52px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 20px 70px rgba(255,210,0,0.35);
+        }
+        .credits { margin-top: 56px; font-size: 32px; color: rgba(255,255,255,0.7); }
+        .credits strong { color: #fff; font-weight: 600; }
+        .credits span { color: var(--gold); margin: 0 12px; }
+
+        /* ---------- captions ---------- */
+        #captions {
+            position: absolute;
+            left: 70px; right: 70px;
+            bottom: 230px;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 6;
+        }
+        .cap-line {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px 22px;
+            font-size: 76px;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+        }
+        .w {
+            display: inline-block;
+            color: rgba(255,255,255,0.38);
+            text-shadow: 0 4px 18px rgba(0,0,0,0.35);
+            will-change: transform;
+        }
+        .w.lit {
+            color: var(--gold);
+            text-shadow: 0 4px 18px rgba(0,0,0,0.35), 0 0 34px rgba(255,210,0,0.45);
+        }
+
+        /* ---------- golden transition ---------- */
+        #wipe {
+            position: absolute;
+            inset: -400px;
+            z-index: 8;
+            pointer-events: none;
+        }
+        #wipe .bar {
+            position: absolute;
+            top: 0; bottom: 0;
+            transform: skewX(-18deg);
+        }
+        #wipe .b1 { width: 900px; background: linear-gradient(90deg, #c99a00, var(--gold) 30%, #fff3b0 55%, var(--gold) 80%, #c99a00); }
+        #wipe .b2 { width: 120px; background: #fff3b0; }
+        #wipe .b3 { width: 60px; background: var(--gold); }
+
+        /* ---------- progress ---------- */
+        #progress {
+            position: absolute;
+            left: 0; bottom: 0;
+            height: 10px;
+            width: 0;
+            background: var(--gold);
+            z-index: 9;
+        }
+        .footer-tag {
+            position: absolute;
+            left: 0; right: 0; bottom: 70px;
+            text-align: center;
+            font-size: 26px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            z-index: 6;
+        }
+        .footer-tag b { color: var(--gold); font-weight: 600; }
+    </style>
+</head>
+<body>
+<div id="stage">
+    <div class="grain"></div>
+    <div class="glow" id="glow"></div>
+
+    <div class="navbar">
+        <div class="nav-logo">D<span>EMARCO</span> 2026</div>
+        <div class="nav-links">
+            <div><span class="label">Editor</span><br><span class="bold">demarco2016</span></div>
+            <div><span class="label">Admin</span><br><span class="bold">Kiravixx</span></div>
+        </div>
+    </div>
+
+    <section class="scene" id="s1">
+        <div class="kicker">Daily tracker</div>
+        <h1 id="title"></h1>
+        <div class="sub">Deep work for 6 hours every day</div>
+        <div class="gold-rule" id="rule1"></div>
+    </section>
+
+    <section class="scene" id="s2">
+        <div class="kicker">Tracked right now</div>
+        <div class="counter" id="counter">0</div>
+        <div class="badge">Projects · 10 categories</div>
+    </section>
+
+    <section class="scene" id="s3">
+        <div class="kicker">One card per task</div>
+        <h1 style="font-size:96px">Open. Do it. <b>Done.</b></h1>
+        <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="scene" id="s4">
+        <div class="kicker">Every category</div>
+        <h1 style="font-size:104px">From <b>DeFi</b> to <b>AI</b> testnets</h1>
+        <div class="chips" id="chips"></div>
+    </section>
+
+    <section class="scene" id="s5">
+        <div class="kicker">Join the hub</div>
+        <h1>Big potential.<br><b>Built daily.</b></h1>
+        <div class="cta" id="cta">Join on Telegram →</div>
+        <div class="credits"><strong>DEMARCO2016</strong> Editor<span>·</span><strong>Kiravixx</strong> Admin</div>
+    </section>
+
+    <div id="captions"></div>
+    <div class="footer-tag"><b>DEMARCO</b> 2026 · Project Tracker</div>
+    <div id="wipe"><div class="bar b1"></div><div class="bar b2"></div><div class="bar b3"></div></div>
+    <div id="progress"></div>
+</div>
+
+<script>
+// ===== Edit here =====
+const TITLE = "Project Big Potential in <b>2026</b>";
+const DURATION = 30;
+const FPS = 30;
+
+// [start, end, text] — words light up one by one, gold
+const CAPTIONS = [
+    [0.4, 2.6, "Big potential needs a plan"],
+    [2.6, 4.8, "Welcome to DEMARCO 2026"],
+    [5.4, 8.0, "34 projects in one tracker"],
+    [8.0, 10.6, "Testnets, bridges, swaps and AI"],
+    [11.4, 14.6, "Every task gets its own card"],
+    [14.6, 17.6, "Open it, finish it, move on"],
+    [18.4, 21.0, "Filter by category in a click"],
+    [21.0, 23.6, "No project slips through"],
+    [24.4, 26.8, "Six hours of deep work daily"],
+    [26.8, 29.6, "Join us on Telegram today"],
+];
+
+// Scene windows; golden wipes happen on each boundary
+const SCENES = [[0, 5], [5, 11], [11, 18], [18, 24], [24, 30]];
+const WIPE = 0.9; // seconds per golden transition
+
+// Same data as index.html
+const CARDS = [
+    {proj:"Canopy Network",cat:"L1 / L2 / Testnet",task:"Rewards"},
+    {proj:"GenLayer",cat:"AI / Testnet",task:"Studio"},
+    {proj:"Miden",cat:"L1 / L2 / Testnet",task:"Playground"},
+    {proj:"ARC Network",cat:"DeFi / Community",task:"Community"},
+];
+const CATEGORIES = ["DeFi / Swap","L1 / L2 / Testnet","AI / Testnet","AI / App","Gaming / App",
+    "DeFi / Bridge","DeFi / Community","DeFi / Rewards","DeFi / Points","DeFi / App"];
+const TOTAL_PROJECTS = 34;
+// =====================
+
+const $ = id => document.getElementById(id);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const easeOut = x => 1 - Math.pow(1 - x, 3);
+const easeInOut = x => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const backOut = x => { const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+
+// ---- build DOM ----
+$("title").innerHTML = TITLE.split(" ").map(w => `<span class="tw" style="display:inline-block">${w}</span>`).join(" ");
+$("grid").innerHTML = CARDS.map(r => `
+    <div class="card">
+        <div class="card-img"><div class="initial">${r.proj.charAt(0)}</div></div>
+        <div class="card-body">
+            <div class="card-title">${r.proj}</div>
+            <div class="card-cat">${r.cat}</div>
+            <div class="card-task">${r.task}</div>
+            <div class="card-footer"><div class="btn btn-primary">Open</div><div class="btn btn-secondary">Info</div></div>
+        </div>
+    </div>`).join("");
+$("chips").innerHTML = CATEGORIES.map((c, i) => `<div class="chip${i % 3 === 1 ? " hot" : ""}">${c}</div>`).join("");
+
+const capLines = CAPTIONS.map(([start, end, text]) => {
+    const el = document.createElement("div");
+    el.className = "cap-line";
+    const words = text.split(" ");
+    const step = (end - start - 0.25) / words.length;
+    el.innerHTML = words.map(w => `<span class="w">${w}</span>`).join("");
+    el.style.display = "none";
+    $("captions").appendChild(el);
+    return { start, end, el, spans: [...el.children], starts: words.map((_, i) => start + i * step) };
+});
+
+const scenes = SCENES.map((_, i) => $("s" + (i + 1)));
+const titleWords = [...document.querySelectorAll("#title .tw")];
+const cards = [...document.querySelectorAll("#grid .card")];
+const chips = [...document.querySelectorAll("#chips .chip")];
+const wipe = $("wipe");
+
+// ---- pure function of time: same frame for the same t ----
+function renderAt(t) {
+    // scenes: each one is fully visible inside its window, swapped under the wipe
+    SCENES.forEach(([a, b], i) => {
+        const visible = t >= a && t < b || (i === SCENES.length - 1 && t >= b);
+        const el = scenes[i];
+        el.style.opacity = visible ? 1 : 0;
+        if (!visible) return;
+        const local = t - a;
+        const enter = easeOut(prog(local, 0, 0.8));
+        const drift = local * 6;
+        el.style.transform = `translateY(${(1 - enter) * 80 - drift}px)`;
+        [...el.querySelectorAll(".kicker, .sub, .badge, .credits")].forEach((k, j) => {
+            const p = easeOut(prog(local, 0.15 + j * 0.2, 0.75 + j * 0.2));
+            k.style.opacity = p;
+            k.style.transform = `translateX(${(1 - p) * -60}px)`;
+        });
+    });
+
+    // scene 1 — title words + gold rule
+    titleWords.forEach((w, i) => {
+        const p = backOut(prog(t, 0.3 + i * 0.12, 0.9 + i * 0.12));
+        w.style.opacity = clamp(p);
+        w.style.transform = `translateY(${(1 - p) * 70}px)`;
+    });
+    $("rule1").style.width = easeInOut(prog(t, 1.4, 3.2)) * 520 + "px";
+
+    // scene 2 — counter
+    $("counter").textContent = Math.round(easeOut(prog(t, 5.3, 7.6)) * TOTAL_PROJECTS);
+    $("counter").style.transform = `scale(${0.85 + 0.15 * backOut(prog(t, 5.2, 6.0))})`;
+
+    // scene 3 — cards
+    cards.forEach((c, i) => {
+        const p = backOut(prog(t, 11.6 + i * 0.3, 12.4 + i * 0.3));
+        c.style.opacity = clamp(p * 1.4);
+        c.style.transform = `translateY(${(1 - p) * 220}px) rotate(${(1 - p) * (i % 2 ? 6 : -6)}deg)`;
+        const pulse = prog(t, 14.6 + i * 0.5, 15.3 + i * 0.5);
+        c.style.borderColor = pulse > 0 && pulse < 1 ? "#ffd200" : (pulse >= 1 ? "#003ea8" : "#e5e5e5");
+    });
+
+    // scene 4 — chips
+    chips.forEach((c, i) => {
+        const p = backOut(prog(t, 18.6 + i * 0.14, 19.2 + i * 0.14));
+        c.style.opacity = clamp(p);
+        c.style.transform = `scale(${0.6 + 0.4 * p})`;
+    });
+
+    // scene 5 — CTA breathing
+    const ctaIn = backOut(prog(t, 25.0, 25.8));
+    $("cta").style.opacity = clamp(ctaIn);
+    $("cta").style.transform = `scale(${(0.7 + 0.3 * ctaIn) * (1 + 0.03 * Math.sin(Math.max(0, t - 25.8) * 4))})`;
+
+    // background glow drift
+    $("glow").style.transform = `translate(${Math.sin(t * 0.5) * 120}px, ${Math.cos(t * 0.35) * 160}px)`;
+
+    // captions — word-by-word gold
+    capLines.forEach(l => {
+        const on = t >= l.start && t < l.end;
+        l.el.style.display = on ? "flex" : "none";
+        if (!on) return;
+        const fade = Math.min(prog(t, l.start, l.start + 0.15), 1 - prog(t, l.end - 0.15, l.end));
+        l.el.style.opacity = fade;
+        l.spans.forEach((s, i) => {
+            const lit = t >= l.starts[i];
+            s.classList.toggle("lit", lit);
+            const pop = prog(t, l.starts[i], l.starts[i] + 0.22);
+            const scale = lit ? 1 + 0.18 * Math.sin(pop * Math.PI) : 1;
+            s.style.transform = `scale(${scale}) translateY(${lit ? -6 * Math.sin(pop * Math.PI) : 0}px)`;
+        });
+    });
+
+    // golden wipe — bars sweep across each scene boundary
+    let wx = null;
+    SCENES.slice(1).forEach(([a]) => {
+        const p = prog(t, a - WIPE / 2, a + WIPE / 2);
+        if (p > 0 && p < 1) wx = easeInOut(p);
+    });
+    wipe.style.display = wx === null ? "none" : "block";
+    if (wx !== null) {
+        const W = 1880;                 // stage + bleed
+        const x = -1100 + wx * (W + 1300);
+        const [b1, b2, b3] = wipe.children;
+        b1.style.left = x + "px";
+        b2.style.left = x - 220 + "px";
+        b3.style.left = x + 1000 + "px";
+    }
+
+    $("progress").style.width = prog(t, 0, DURATION) * 100 + "%";
+}
+
+// ---- preview vs export ----
+const params = new URLSearchParams(location.search);
+window.renderAt = renderAt;
+window.REEL = { DURATION, FPS };
+
+function fit() {
+    if (params.has("export")) return;
+    const s = Math.min(innerWidth / 1080, innerHeight / 1920);
+    $("stage").style.transform = `scale(${s})`;
+}
+addEventListener("resize", fit);
+fit();
+
+if (params.has("export")) {
+    document.body.style.display = "block";
+    renderAt(0);
+} else {
+    const t0 = performance.now();
+    (function loop(now) {
+        renderAt(((now - t0) / 1000) % DURATION);
+        requestAnimationFrame(loop);
+    })(t0);
+}
+</script>
+</body>
+</html>
